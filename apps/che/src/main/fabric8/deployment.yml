@@ -150,19 +150,69 @@ spec:
             configMapKeyRef:
               key: "che-workspace-auto-snapshot"
               name: "che"
-        image: "registry.devshift.net/che/che:${che-server.version}"
+        - name: "CHE_FABRIC8_MULTITENANT"
+          valueFrom:
+            configMapKeyRef:
+              key: "che-fabric8-multitenant"
+              name: "che"
+        - name: "CHE_FABRIC8_USER__SERVICE_ENDPOINT"
+          valueFrom:
+            configMapKeyRef:
+              key: "che-fabric8-user-service-endpoint"
+              name: "che"
+        - name: "CHE_FABRIC8_WORKSPACES_ROUTING__SUFFIX"
+          valueFrom:
+            configMapKeyRef:
+              key: "che-fabric8-workspace-routing-suffix"
+              name: "che"
+        - name: "CHE_DOCKER_ENABLE__CONTAINER__STOP__DETECTOR"
+          valueFrom:
+            configMapKeyRef:
+              key: "che-docker-enable-container-stop-detector"
+              name: "che"
+        - name: "CHE_WORKSPACE_CHE__SERVER__ENDPOINT"
+          valueFrom:
+            configMapKeyRef:
+              key: "che-workspace-che-server-endpoint"
+              name: "che"
+        - name: "CHE_WORKSPACE_CHE_LOGS"
+          valueFrom:
+            configMapKeyRef:
+              key: "che-workspace-logs"
+              name: "che"
+        - name: "CHE_KEYCLOAK_AUTH__SERVER__URL"
+          valueFrom:
+            configMapKeyRef:
+              key: "che-keycloak-auth-server-url"
+              name: "che"
+        - name: "CHE_KEYCLOAK_REALM"
+          valueFrom:
+            configMapKeyRef:
+              key: "che-keycloak-realm"
+              name: "che"
+        - name: "CHE_KEYCLOAK_CLIENT__ID"
+          valueFrom:
+            configMapKeyRef:
+              key: "che-keycloak-client-id"
+              name: "che"
+        - name: "CHE_HOST"
+          valueFrom:
+            configMapKeyRef:
+              key: "che-host"
+              name: "che"
+        image: "dfestal/che-server-multiuser:${che-server.version}"
         imagePullPolicy: "IfNotPresent"
         name: che
         readinessProbe:
           httpGet:
-            path: /api/system/state
+            path: /api
             port: 8080
             scheme: HTTP
           initialDelaySeconds: 15
           timeoutSeconds: 60
         livenessProbe:
           httpGet:
-            path: /api/system/state
+            path: /api
             port: 8080
             scheme: HTTP
           initialDelaySeconds: 120
